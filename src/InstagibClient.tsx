@@ -144,7 +144,19 @@ export type MatchConfig =
 // server hosts both the static build and the /ws/instagib socket), so the
 // default multiplayer URL is derived from the current location: ws in dev,
 // wss behind TLS. In dev, Vite proxies /ws to the backend (see vite.config.ts).
+function envServerUrl(): string | undefined {
+  // .env / deploy env can inject the game-server URL (Vite only exposes
+  // VITE_-prefixed vars to the client). Accept both a bare ws/wss URL and a
+  // base origin (/ws/instagib is appended when missing).
+  const raw = import.meta.env.VITE_SERVER_URL;
+  if (typeof raw !== 'string' || !raw) return undefined;
+  const url = raw.trim();
+  return /\/ws\/instagib\/?$/.test(url) ? url : `${url.replace(/\/$/, '')}/ws/instagib`;
+}
+
 function defaultServerUrl(): string {
+  const fromEnv = envServerUrl();
+  if (fromEnv) return fromEnv;
   if (typeof window === 'undefined') return 'ws://localhost:8787/ws/instagib';
   const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';
   return `${proto}://${window.location.host}/ws/instagib`;
