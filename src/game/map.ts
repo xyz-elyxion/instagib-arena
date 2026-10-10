@@ -134,6 +134,15 @@ type WorldBake = {
 
 const bakeCache = new Map<string, WorldBake>();
 
+// Editor hook: drop one map's world bake (lightmap + render box list) so the
+// next buildMapMesh rebuilds from the updated box list. Client-side only
+// (map.ts imports three); the map editor calls this after swapping the
+// 'custom' registry entry. The theme's session texture cache stays — it's
+// keyed by theme id, which the workshop look doesn't change.
+export function invalidateMapBake(mapId: string): void {
+  bakeCache.delete(mapId);
+}
+
 function mapIdOf(map: ArenaMap): string | undefined {
   return MAPS.find((m) => m.map === map)?.id ?? MAPS.find((m) => m.map.name === map.name)?.id;
 }

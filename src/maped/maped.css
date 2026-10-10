@@ -1,0 +1,260 @@
+/* MapLab editor chrome — the deck's language at drafting-tool density. */
+
+.me-panel {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(7, 9, 12, 0.96);
+}
+.me-body {
+  padding: 0.9rem;
+}
+.me-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.55rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.me-ok-text { color: #6ee7b7; }
+.me-err-text { color: #fda4af; }
+.me-hint-t { color: rgba(255, 255, 255, 0.35); }
+
+.me-h {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+.me-note {
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.5);
+}
+.me-empty {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.3);
+}
+.me-blurb {
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.me-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.me-tab {
+  flex: 1;
+  padding: 0.6rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  border-bottom: 2px solid transparent;
+  transition: color 0.12s, border-color 0.12s;
+}
+.me-tab:hover { color: rgba(255, 255, 255, 0.8); }
+.me-tab-on {
+  color: #67e8f9;
+  border-bottom-color: #22d3ee;
+}
+
+.me-palette {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+.me-kind {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.45rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  transition: border-color 0.12s, color 0.12s, background 0.12s;
+}
+.me-kind:hover {
+  border-color: rgba(103, 232, 249, 0.4);
+  color: #cffafe;
+}
+.me-kind-on {
+  border-color: rgba(34, 211, 238, 0.7);
+  background: rgba(34, 211, 238, 0.08);
+  color: #a5f3fc;
+}
+.me-kind-sm {
+  padding: 0.25rem 0.45rem;
+  font-size: 9.5px;
+}
+.me-kind-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  clip-path: polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.me-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.4rem 0.55rem;
+  cursor: pointer;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.75);
+  transition: border-color 0.12s, background 0.12s;
+}
+.me-row:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+}
+.me-row:focus-visible {
+  outline: none;
+  border-color: rgba(34, 211, 238, 0.6);
+}
+.me-row-on {
+  border-color: rgba(251, 191, 36, 0.5);
+  background: rgba(251, 191, 36, 0.06);
+}
+.me-row-x {
+  margin-left: 0.1rem;
+  padding: 0 0.25rem;
+  font: 700 11px var(--font-mono);
+  color: rgba(255, 255, 255, 0.35);
+  transition: color 0.12s;
+}
+.me-row-x:hover { color: #fda4af; }
+
+.me-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.025);
+  padding: 0.7rem;
+}
+.me-chip {
+  padding: 0.1rem 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.me-chip-ok {
+  border: 1px solid rgba(110, 231, 183, 0.5);
+  color: #6ee7b7;
+}
+
+.me-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.me-field-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+.me-field-input {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.3rem 0.5rem;
+}
+.me-field-input:focus-within {
+  border-color: rgba(34, 211, 238, 0.55);
+}
+.me-field-input input {
+  width: 100%;
+  min-width: 0;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #e2e8f0;
+}
+.me-field-input input:focus { outline: none; }
+/* Hide the number spinners — typing + arrow keys still work. */
+.me-field-input input[type='number']::-webkit-outer-spin-button,
+.me-field-input input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.me-field-input input[type='number'] { -moz-appearance: textfield; appearance: textfield; }
+.me-field-suffix {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+}
+.me-text {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.45rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #e2e8f0;
+}
+.me-text:focus {
+  outline: none;
+  border-color: rgba(34, 211, 238, 0.55);
+}
+.me-color {
+  width: 100%;
+  height: 1.7rem;
+  border: none;
+  background: none;
+}
+.me-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+.me-check input { accent-color: #22d3ee; }
+
+.me-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(110, 231, 183, 0.55);
+  background: rgba(52, 211, 153, 0.14);
+  padding: 0.5rem 0.9rem;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a7f3d0;
+  transition: background 0.12s, color 0.12s;
+}
+.me-play:hover {
+  background: rgba(52, 211, 153, 0.26);
+  color: #ecfdf5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .me-kind, .me-row, .me-tab, .me-play, .me-row-x { transition: none; }
+}

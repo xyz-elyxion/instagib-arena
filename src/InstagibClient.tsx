@@ -43,7 +43,12 @@ import { NameBadges } from './ui/badges';
 import { HUD_EXIT_LEAD_MS, HUD_EXIT_MS } from './ui/hud-const';
 import { FightCall, HudXpTicker, Killfeed, QuakeScoreboard, ScoreBoxes, type HudMatchInfo } from './ui/hud-quake';
 import { fragLimitFor, mapIdByName, mapNameById, modeLine, modeTitle, placementLine, type MatchFlavor } from './ui/match-info';
-import { mapById } from './game/map';
+import { mapById, invalidateMapBake } from './game/map';
+import { CUSTOM_ACCENT_DEFAULT, sanitizeCustom as sanitizeCustomDraft } from './game/maps/custom';
+import { installCustomMap, customMapData } from './game/arena-map-data';
+// Same key the editor writes (src/maped/MapLab.tsx); cross-module on purpose:
+// /play?editor=1 must read the latest draft regardless of build chunking.
+const MAPLAB_KEY = 'instagib-maplab-v1';
 import { setUiVolume } from './game/audio';
 import {
   LobbyClient,
@@ -245,7 +250,19 @@ function applySettingsToGame(game: Game, s: Settings) {
 
 // Configures a freshly-created Game for a match before start().
 function applyMatchConfig(game: Game, config: MatchConfig) {
-  game.setMap(mapById(config.mapId));
+  // Editor playtest (?editor=1): re-install the latest MapLab draft into the
+  // 'custom' registry entry and bust the bake cache so the arena builds
+  // fresh; a corrupt/missing draft falls back to the registry copy.
+  if (typeof window !== 'undefined' && config.mapId === 'custom' &&
+      new URLSearchParams(window.location.search).has('editor')) {
+    try {
+      const raw = window.localStorage.getItem(MAPLAB_KEY);
+      if (raw) {
+        installCustomMap(sanitizeCustomDraft(JSON.parse(raw)));
+        invalidateMapBake('custom');
+      }
+    } catch { /* stale draft — keep the registry copy */ }
+  }
   if (config.mode === 'spectator') {
     game.setBotsEnabled(false);
     game.setMultiplayer({ enabled: true, url: config.serverUrl, roomId: config.roomId, spectate: true });

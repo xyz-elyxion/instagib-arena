@@ -14,6 +14,7 @@ const RewardsLab = lazy(() => import('./ui/RewardsLab'));
 const GunLab = lazy(() => import('./game/gun/GunLab'));
 const FxLab = lazy(() => import('./game/fx/FxLab'));
 const CustomGunLab = lazy(() => import('./game/gun/custom/CustomGunLab'));
+const EditorLab = lazy(() => import('./maped/MapLab'));
 const AdminDashboard = lazy(() => import('./AdminDashboard'));
 
 // Full-screen fallback while a route chunk downloads. Same deck ground as the
@@ -86,6 +87,14 @@ createRoot(document.getElementById('root')!).render(
         element={
           <Suspense fallback={<Loading />}>
             <GunLab />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/maplab"
+        element={
+          <Suspense fallback={<Loading />}>
+            <EditorLab />
           </Suspense>
         }
       />
